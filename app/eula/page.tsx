@@ -86,23 +86,30 @@ export default function EulaPage() {
           </p>
           <p className="mb-3">
             <strong className="text-[--color-text]">What we do with it.</strong> You grant us a
-            limited, non-exclusive, worldwide licence to host, store, transcribe, segment, translate
-            and generate audio from your Imported Content, solely to provide the Application to you.
-            We do not publish it, share it with other users, or use it to train models. This licence
-            exists only to run the feature and ends when you delete the content or your account.
+            limited, non-exclusive, worldwide licence to process your Imported Content — to transmit
+            it to our transcription provider, transcribe it, and segment it into sentences and words
+            — solely to provide the Application to you. We do not publish it, share it with other
+            users, or use it to train models. This licence exists only to run the feature and ends
+            when you delete the content or your account.
           </p>
           <p className="mb-3">
-            <strong className="text-[--color-text]">What we keep.</strong> Uploaded audio is
-            processed for transcription and is not retained by us. The resulting text is stored in
-            your account so the story can be read, along with audio we generate from that text. All
-            of it is private to your account and is deleted when you delete the story or your
-            account.
+            <strong className="text-[--color-text]">What we keep: nothing.</strong> Imported Content
+            stays on your device. The audio file and its transcript are held in the
+            Application&apos;s own storage on your phone, never in our database, and they are gone
+            when you delete the story or remove the Application. Audio you import is sent once to
+            our transcription provider, which returns text and does not retain the recording. The
+            transcript passes through our servers to be matched against the dictionary, and the only
+            thing we keep from that is which words you encountered and how often — your vocabulary
+            statistics, not your text. We do not store the audio, the transcript, or any other part
+            of what you imported.
           </p>
           <p className="mb-3">
-            <strong className="text-[--color-text]">Enforcement.</strong> We may remove Imported
-            Content and suspend or terminate accounts where we reasonably believe this section has
-            been breached, without notice and without refund. We have no obligation to monitor
-            Imported Content, and removing some material does not oblige us to review any other.
+            <strong className="text-[--color-text]">Enforcement.</strong> Because Imported Content
+            stays on your device, we cannot delete it for you — what we can do is stop processing it
+            and close the account. We may refuse to transcribe or process Imported Content, and
+            suspend or terminate accounts, where we reasonably believe this section has been
+            breached, without notice and without refund. We have no obligation to monitor Imported
+            Content, and acting on one report does not oblige us to review any other.
           </p>
           <p>
             <strong className="text-[--color-text]">Indemnity.</strong> You will indemnify and hold
@@ -127,8 +134,10 @@ export default function EulaPage() {
             </a>{" "}
             with a description of the work, where it appears, your contact details, and a statement
             that you hold the rights or are authorised to act for the rights holder. We respond to
-            valid notices promptly and will remove infringing material and, where appropriate,
-            terminate the account responsible.
+            valid notices promptly, remove infringing material from our systems, and where
+            appropriate terminate the account responsible. Note that content a user imports is held
+            on their own device rather than by us, so terminating the account is the remedy
+            available to us there.
           </p>
         </section>
 

@@ -51,7 +51,9 @@ export default function PrivacyPage() {
             </li>
             <li>
               <strong className="text-[--color-text]">Content you create</strong> — the sentences
-              you write, your chat messages, words you add, and stories you generate or import.
+              you write, your chat messages, words you add, and the stories Menzi generates for you.
+              Audio you import to study as a story is not in this list: it stays on your device and
+              never reaches our database.
             </li>
             <li>
               <strong className="text-[--color-text]">Audio</strong> — recordings you make when you
@@ -171,6 +173,12 @@ export default function PrivacyPage() {
             We keep your account and learning data for as long as your account exists. Diagnostic
             breadcrumbs are kept on a short rolling window and then discarded. Audio recordings are
             not retained at all.
+          </p>
+          <p className="mb-3">
+            Audio you import to study as a story is stored only on your device. It is sent once for
+            transcription and not retained there either; the transcript is matched against the
+            dictionary on our servers, and all we keep from it is which words you encountered and
+            how often. We do not store the audio or the transcript.
           </p>
           <p>
             Guest accounts created during onboarding but never completed are pruned automatically.
