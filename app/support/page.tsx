@@ -45,7 +45,7 @@ const faqs = [
   },
   {
     q: "What does Menzi Pro include, and what's free?",
-    a: "There is a free tier and one paid plan: Menzi Pro at $19.99 per month, which includes 20M AI credits and 30 minutes of audio each month. There is no annual option and no other tier. The free tier gives you the full app with smaller monthly allowances; Pro is for daily practice, especially if you lean on speaking and generated stories.",
+    a: "There is a free tier and one paid plan: Menzi Pro at $19.99 per month, which includes 20M AI credits and 30 minutes of audio each month. There is no annual option and no other tier. The free tier opens the whole app — every mode, all four axes, the full HSK dictionary — but its allowance is a one-time grant of 5M AI credits and 10 minutes of audio, roughly 150 graded sentences. It does not reset each month; it is there so you can try everything properly before deciding.",
   },
   {
     q: "How do I cancel my subscription?",

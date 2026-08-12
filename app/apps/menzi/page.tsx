@@ -46,10 +46,10 @@ const modes = [
 const tiers = [
   {
     name: "Free",
-    price: "No card required",
+    price: "One-time trial grant",
     description:
-      "The whole app, with smaller monthly allowances. Every mode, all four axes, the full HSK dictionary.",
-    features: ["Every learning mode", "Four-axis scheduling", "Monthly AI + audio allowance"],
+      "The whole app — every mode, all four axes, the full HSK dictionary — with a one-time allowance of 5M AI credits and 10 minutes of audio. Enough for roughly 150 graded sentences. It does not reset.",
+    features: ["Every learning mode", "Four-axis scheduling", "5M AI credits + 10 min audio, once"],
     highlighted: false,
   },
   {
@@ -69,7 +69,7 @@ export default function MenziPage() {
       <div className="mb-16 max-w-2xl">
         <div className="flex items-center gap-2 mb-4">
           <Badge variant="outline">iOS</Badge>
-          <Badge variant="secondary">Available on the App Store</Badge>
+          <Badge variant="secondary">Coming soon</Badge>
         </div>
         <h1 className="text-5xl font-bold mb-4">Menzi</h1>
         <p className="text-xl text-[--color-muted] leading-relaxed mb-8">
@@ -77,12 +77,12 @@ export default function MenziPage() {
           with AI-powered practice — personalized to your exact vocabulary.
         </p>
         <a
-          href="https://apps.apple.com"
+          href="https://apps.apple.com/app/id6779087684"
           target="_blank"
           rel="noopener noreferrer"
           className={buttonVariants({ size: "lg" })}
         >
-          Download on the App Store ↗
+          View on the App Store ↗
         </a>
       </div>
 
@@ -150,7 +150,7 @@ export default function MenziPage() {
               <CardHeader>
                 <div className="flex items-center justify-between mb-1">
                   <CardTitle className="text-base font-bold">{tier.name}</CardTitle>
-                  {tier.highlighted && <Badge>Most popular</Badge>}
+                  {tier.highlighted && <Badge>Recommended</Badge>}
                 </div>
                 <p className="text-xs text-[--color-muted] mb-3">{tier.price}</p>
                 <CardDescription className="text-sm leading-relaxed mb-4">
