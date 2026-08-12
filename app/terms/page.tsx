@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: "Terms of Use for Terros Digital apps.",
 };
 
-const EFFECTIVE_DATE = "March 13, 2026";
+const EFFECTIVE_DATE = "August 11, 2026";
 
 export default function TermsPage() {
   return (
@@ -46,14 +46,19 @@ export default function TermsPage() {
         <section>
           <h2 className="text-base font-semibold text-[--color-text] mb-3">3. Subscriptions and Billing</h2>
           <p className="mb-3">
-            Menzi offers auto-renewing subscription tiers (Standard, Pro) billed
-            through Apple&apos;s In-App Purchase system. Prices are shown in the app before purchase.
+            Menzi has a free tier and one paid plan: <strong className="text-[--color-text]">Menzi
+            Pro</strong>, an auto-renewing subscription at $19.99 per month, including 20M AI
+            credits and 30 minutes of audio each month. There is no annual option. Billing runs
+            through Apple&apos;s In-App Purchase system and the price is shown in the app before
+            purchase.
           </p>
           <ul className="list-disc pl-5 space-y-2">
-            <li>Subscriptions renew automatically unless cancelled at least 24 hours before the end of the current period.</li>
-            <li>Manage or cancel your subscription in iPhone Settings → Apple ID → Subscriptions.</li>
+            <li>Payment is charged to your Apple ID at confirmation of purchase.</li>
+            <li>The subscription renews automatically unless auto-renew is turned off at least 24 hours before the end of the current period.</li>
+            <li>Manage or cancel in iPhone Settings → your name → Subscriptions. Cancelling stops the next renewal; access continues to the end of the period already paid for.</li>
+            <li>Unused credits and audio minutes do not carry over between periods.</li>
             <li>Refunds are handled by Apple in accordance with their policies.</li>
-            <li>We reserve the right to change subscription pricing with reasonable notice.</li>
+            <li>We may change pricing with reasonable notice; a change never affects a period you have already paid for.</li>
           </ul>
         </section>
 
@@ -74,12 +79,18 @@ export default function TermsPage() {
 
         <section>
           <h2 className="text-base font-semibold text-[--color-text] mb-3">5. AI-Generated Content</h2>
+          <p className="mb-3">
+            Menzi uses large language models and speech services to grade your work and generate
+            educational content. To do that, the sentences you write and the audio you record are
+            sent to third-party providers — see the{" "}
+            <a href="/privacy" className="text-[--color-brand] hover:text-[--color-brand-hover] transition-colors">Privacy Policy</a>{" "}
+            for who they are and what they receive.
+          </p>
           <p>
-            Menzi uses large language models and voice synthesis to generate
-            educational content. This content is for learning purposes only and
-            may occasionally contain errors. We do not guarantee the accuracy of
-            AI-generated explanations, feedback, or sentences. Always verify
-            important language information with authoritative sources.
+            AI-generated explanations, feedback, grades and sentences are for learning purposes only
+            and may occasionally be wrong. We do not guarantee their accuracy, and a grade is not an
+            authoritative assessment of your ability. Verify important language information against
+            authoritative sources.
           </p>
         </section>
 

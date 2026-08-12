@@ -16,32 +16,48 @@ export const metadata: Metadata = {
 
 const faqs = [
   {
-    q: "How does spaced repetition work in Menzi?",
-    a: "Menzi uses the SM-2 algorithm. After each review you rate your recall 1–5, and the algorithm schedules the next review accordingly — sooner for cards you struggled with, later for cards you know well. This compounds over time, so your review load stays manageable no matter how large your deck grows.",
+    q: "What makes Menzi different from other flashcard apps?",
+    a: "Most review is recognition — you see a word and decide whether you knew it. Menzi asks you to produce the language instead: you write a real sentence using the target word, and a language model reads it and grades it on two separate axes. Comprehension (did the meaning land) drives your review schedule and is graded once, on your honest first attempt. Correctness (is the Chinese actually grammatical) has to reach 5/5 before you move on, with unlimited attempts and the corrected sentence shown. So your score stays honest, and you don't advance with broken Chinese.",
   },
   {
-    q: "What is Speaking Mode and what do I need for it?",
-    a: "Speaking Mode is a real-time voice conversation with an AI tutor powered by ElevenLabs. The tutor is constrained to your vocabulary profile, so it won't use words you haven't learned. It requires a Pro subscription and a stable internet connection.",
+    q: "What are the four axes?",
+    a: "Reading a character, using a word, hearing it, and saying it are different skills, so Menzi schedules them separately. Every word has its own spaced-repetition state for meaning, reading, listening and speaking, and each one unlocks as your comprehension of that word grows. That's why a word can be solid in one mode and still due in another — 'I know this word' stops being a single number.",
   },
   {
-    q: "How is Listening Mode different from Speaking Mode?",
-    a: "Listening Mode is passive — the app generates short comprehensible input sentences from your own deck and reads them aloud. Speaking Mode is interactive — you speak and the AI responds in real time. Both require a Pro subscription.",
+    q: "How does the speaking practice work?",
+    a: "In Speak review you hold the button and say the word. The recording is transcribed and scored by Microsoft Azure's pronunciation assessment for Mandarin, which is tone-aware — that's the part written practice can't reach. You get an accuracy, fluency and completeness breakdown, plus an A/B replay against a native reference. Your first take is the one that counts; re-records are practice.",
   },
   {
-    q: "What are Constructs and how is progress tracked?",
-    a: "Constructs are grammar patterns (e.g. 是…的, 把-sentences). Each one has a sentence construction exercise that you complete and submit. An LLM grades your response and provides feedback. Progress is tracked per pattern, independently of your flashcard deck.",
+    q: "Can I talk to the tutor?",
+    a: "Yes. In the Immersion tab, Chat is an open-ended conversation in Chinese. You can type, or hold the mic to speak and your recording is transcribed and answered with audio. Every Chinese sentence you send is graded like any other, so conversation counts as practice rather than sitting outside the system. It's turn-based — record, send, reply — not a live phone call.",
   },
   {
-    q: "Can I import my own vocabulary?",
-    a: "Custom import is on the roadmap. Currently, vocabulary is added through the app's built-in deck management — you can add words manually or accept suggestions from Learn Mode.",
+    q: "Where do the stories come from?",
+    a: "They're generated from the words already in your deck, so what you read is genuinely comprehensible input rather than text pitched at an average learner. Stories come with read-along audio and tap-to-reveal pinyin, and they get harder as your vocabulary grows. You can also import your own audio and have it transcribed and segmented.",
   },
   {
-    q: "What's the difference between Standard and Pro?",
-    a: "Both tiers give you access to all six learning modes. The difference is credit allocation — Pro gives you a larger pool of credits, which matters most if you use Speaking Mode and Listening Mode heavily (both involve real-time voice generation via ElevenLabs). Standard is plenty for a consistent daily practice.",
+    q: "Is grammar covered, or just vocabulary?",
+    a: "Grammar patterns are spaced-repetition items in their own right, with their own practice regiment and progress tracking — not a side tab. Drills run in both directions: sometimes you render English into Chinese, sometimes you translate a Chinese sentence into English, and the grader knows which direction it asked for.",
+  },
+  {
+    q: "How do I add my own words?",
+    a: "Two ways. You can add a word directly from the Reference tab, which looks up the pinyin and meaning for you, and you can browse the full HSK dictionary there and add anything from it. Menzi also picks up words you use anywhere in the app and folds them into your backlog, so your word list reflects what you've actually encountered, not only what you formally studied.",
+  },
+  {
+    q: "What does Menzi Pro include, and what's free?",
+    a: "There is a free tier and one paid plan: Menzi Pro at $19.99 per month, which includes 20M AI credits and 30 minutes of audio each month. There is no annual option and no other tier. The free tier gives you the full app with smaller monthly allowances; Pro is for daily practice, especially if you lean on speaking and generated stories.",
   },
   {
     q: "How do I cancel my subscription?",
-    a: "Subscriptions are managed through the App Store. Go to Settings → Apple ID → Subscriptions on your iPhone to cancel at any time. You retain Pro access until the end of the current billing period.",
+    a: "Subscriptions are managed by Apple, not by us. On your iPhone go to Settings, tap your name, then Subscriptions, and cancel there. You keep Pro access until the end of the billing period you've already paid for.",
+  },
+  {
+    q: "How do I delete my account?",
+    a: "In the app: Settings, scroll to the bottom, then Delete Account. If you have Face ID or Touch ID enrolled you'll be asked to re-authenticate first. It's immediate and permanent — your deck, review history, sessions and stories all go. If you'd rather we did it, email support and we'll action it within 30 days.",
+  },
+  {
+    q: "Does Menzi work offline?",
+    a: "No. Grading, conversation, audio and story generation all run server-side, so Menzi needs an internet connection.",
   },
 ];
 

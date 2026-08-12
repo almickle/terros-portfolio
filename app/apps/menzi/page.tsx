@@ -7,57 +7,57 @@ import { buttonVariants } from "@/lib/button-variants";
 export const metadata: Metadata = {
   title: "Menzi — Mandarin Chinese for Serious Learners",
   description:
-    "Menzi is a depth-first iOS Mandarin app combining SM-2 spaced repetition with AI-powered speaking, listening, and writing practice.",
+    "Menzi teaches Mandarin with spaced repetition, and every review asks you to produce the language rather than recognize it. A language model grades what you write and say.",
 };
 
 const modes = [
   {
-    name: "Hanzi Mode",
+    name: "Pinyin",
     description:
-      "See a character, type the pinyin. Builds the critical reading-to-pronunciation link that most apps skip.",
+      "You're given a word and you write a real sentence with it. A language model grades the sentence on meaning and on grammar, separately, and that grade schedules the word's next review.",
   },
   {
-    name: "Pinyin Mode",
+    name: "Hanzi",
     description:
-      "See pinyin, write a sentence using the word. Forces active recall and production, not just recognition.",
+      "See a character, type the reading. Builds the character-to-pronunciation link that recognition drills never reach.",
   },
   {
-    name: "Learn Mode",
+    name: "Speak",
     description:
-      "New vocabulary arrives with AI-generated explanations, example sentences, and context before entering your review queue.",
+      "Hold the button and say the word. Scored by Azure's Mandarin pronunciation assessment — tone-aware, with accuracy and fluency broken out, and an A/B replay against a native reference.",
   },
   {
-    name: "Speaking Mode",
+    name: "Listen",
     description:
-      "Real-time voice conversation with an AI tutor constrained to your vocabulary — you'll never encounter a word you haven't learned.",
+      "Type what you hear, from natural generated audio built around the vocabulary you're working on.",
   },
   {
-    name: "Listening Mode",
+    name: "Grammar",
     description:
-      "Comprehensible input sentences generated from your own deck, read aloud by a natural voice. Ear training at exactly your level.",
+      "Patterns are spaced-repetition items in their own right, drilled by translation in both directions, with their own practice regiment and progress.",
   },
   {
-    name: "Constructs Mode",
+    name: "Immersion",
     description:
-      "A grammar pattern library with sentence construction exercises graded by AI. Progress is tracked per pattern, separate from vocabulary.",
+      "Chat in Chinese by text or voice with every sentence graded, and read stories generated from the words you already know, with read-along audio.",
   },
 ];
 
 const tiers = [
   {
-    name: "Standard",
-    price: "Free to try",
+    name: "Free",
+    price: "No card required",
     description:
-      "Access to all six learning modes with a standard credit allocation — enough for a consistent daily practice.",
-    features: ["All six modes", "SM-2 scheduling", "Standard credit allocation"],
+      "The whole app, with smaller monthly allowances. Every mode, all four axes, the full HSK dictionary.",
+    features: ["Every learning mode", "Four-axis scheduling", "Monthly AI + audio allowance"],
     highlighted: false,
   },
   {
-    name: "Pro",
-    price: "Subscription",
+    name: "Menzi Pro",
+    price: "$19.99 / month",
     description:
-      "The same full feature set with a larger credit pool — designed for learners who use Speaking and Listening Mode heavily.",
-    features: ["All six modes", "SM-2 scheduling", "Higher credit allocation"],
+      "For daily practice. 20M AI credits and 30 minutes of audio each month — the headroom that matters if you lean on speaking, conversation and generated stories.",
+    features: ["20M AI credits per month", "30 minutes of audio per month", "Cancel any time in the App Store"],
     highlighted: true,
   },
 ];
@@ -116,12 +116,13 @@ export default function MenziPage() {
               <span className="text-[--color-brand] text-sm font-bold">∞</span>
             </div>
             <div>
-              <h2 className="text-sm font-semibold mb-2">Built on proven science</h2>
+              <h2 className="text-sm font-semibold mb-2">Spaced repetition, without the self-grading</h2>
               <p className="text-sm text-[--color-muted] leading-relaxed max-w-2xl">
-                Menzi uses the SM-2 spaced repetition algorithm to schedule every card
-                at exactly the right moment. Each response is scored 1–5 — by you for
-                quick reviews, or by AI for written and spoken answers — so the
-                schedule adapts to how well you actually know each word.
+                SM-2 is the right framework for memory, which is why it has outlasted every trend.
+                But a flashcard can only ask &quot;did you know it?&quot;, and you are the one
+                answering. Nobody can grade their own Chinese. Menzi keeps the framework and
+                replaces the self-assessment with a language model that reads what you produced,
+                so the schedule tracks what you can do rather than what looked familiar.
               </p>
             </div>
           </div>
