@@ -293,7 +293,7 @@ export default function EulaPage() {
         <section>
           <h2 className="text-base font-semibold text-[--color-text] mb-3">16. Governing Law</h2>
           <p>
-            This Agreement is governed by the laws of the State of South Carolina, United States,
+            This Agreement is governed by the laws of the State of California, United States,
             without regard to its conflict of law principles, except where mandatory local consumer
             law applies to you.
           </p>

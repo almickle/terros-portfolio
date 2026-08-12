@@ -143,8 +143,9 @@ export default function TermsPage() {
         <section>
           <h2 className="text-base font-semibold text-[--color-text] mb-3">10. Governing Law</h2>
           <p>
-            These terms are governed by the laws of the jurisdiction in which
-            Terros Digital is registered, without regard to conflict of law principles.
+            These terms are governed by the laws of the State of California, United States,
+            where Terros Digital LLC is registered, without regard to its conflict of law
+            principles, except where mandatory local consumer law applies to you.
           </p>
         </section>
 
