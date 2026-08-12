@@ -12,6 +12,9 @@ export function Footer() {
           <Link href="/terms" className="hover:text-[--color-text] transition-colors">
             Terms of Use
           </Link>
+          <Link href="/eula" className="hover:text-[--color-text] transition-colors">
+            EULA
+          </Link>
           <Link href="/support" className="hover:text-[--color-text] transition-colors">
             Support
           </Link>
