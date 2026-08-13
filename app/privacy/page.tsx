@@ -118,8 +118,9 @@ export default function PrivacyPage() {
               <strong className="text-[--color-text]">The sentences and chat messages you write</strong>{" "}
               are sent to <strong className="text-[--color-text]">OpenRouter</strong>, which routes
               them to a large language model to be graded, answered, or used to generate a story or
-              exercise. Depending on the task, the model may be operated by Anthropic, Google,
-              OpenAI, DeepSeek or Moonshot AI.
+              exercise. Depending on the task, the model may be operated by Google, OpenAI or
+              DeepSeek. The in-app AI consent screen names the same list, derived from the models
+              actually in use, and is the version to trust if this page ever falls behind it.
             </li>
             <li>
               <strong className="text-[--color-text]">Audio you record</strong> is sent to{" "}
