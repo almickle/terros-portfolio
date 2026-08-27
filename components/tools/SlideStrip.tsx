@@ -1,5 +1,4 @@
 import { assetSrc, postable, type ManifestVariant } from "@/lib/tools/manifest";
-import { MissingTile } from "@/components/tools/GridTile";
 
 /**
  * The slides in order, each at the ratio it was actually authored at.
@@ -28,12 +27,8 @@ export function SlideStrip({ variant }: { variant: ManifestVariant }) {
                 className="overflow-hidden rounded-lg border border-border bg-[#111]"
                 style={{ aspectRatio: variant.canvas.aspect, height: 420 }}
               >
-                {src ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={src} alt={`${variant.label} slide ${i + 1}`} className="h-full w-full object-contain" />
-                ) : (
-                  <MissingTile />
-                )}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={src} alt={`${variant.label} slide ${i + 1}`} className="h-full w-full object-contain" />
               </div>
               <figcaption className="mt-1.5 flex items-baseline justify-between gap-3 font-mono text-[11px] text-[--color-muted]">
                 <span>{asset.file}</span>
@@ -57,12 +52,8 @@ export function SlideStrip({ variant }: { variant: ManifestVariant }) {
               return (
                 <figure key={asset.path} className="shrink-0">
                   <div className="overflow-hidden rounded-lg border border-dashed border-border bg-[#111]" style={{ height: 260 }}>
-                    {src ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={src} alt={asset.file} className="h-full w-auto object-contain" />
-                    ) : (
-                      <MissingTile />
-                    )}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={src} alt={asset.file} className="h-full w-auto object-contain" />
                   </div>
                   <figcaption className="mt-1.5 font-mono text-[11px] text-[--color-muted]">
                     {asset.file} · {asset.width}×{asset.height}

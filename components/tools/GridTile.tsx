@@ -18,30 +18,12 @@ import { assetSrc, type ManifestAsset } from "@/lib/tools/manifest";
  */
 export function GridTile({ asset, alt }: { asset: ManifestAsset; alt: string }) {
   const src = assetSrc(asset, "thumb");
-  if (!src) return <MissingTile />;
   return (
     <div className="relative aspect-[3/4] overflow-hidden rounded-md bg-[#111]">
       {/* eslint-disable-next-line @next/next/no-img-element -- the blob host is
           configured at runtime, so next/image's build-time remotePatterns can't
           know it. An internal tool over ~4MB of webp does not need the loader. */}
       <img src={src} alt={alt} loading="lazy" className="h-full w-full object-cover" />
-    </div>
-  );
-}
-
-/**
- * Shown when an asset has no resolvable URL — an unpublished manifest with no
- * `MARKETING_ASSET_BASE` set. A blank box would read as a broken render, which
- * is the one thing this portal must never do by accident.
- */
-export function MissingTile() {
-  return (
-    <div className="flex aspect-[3/4] items-center justify-center rounded-md border border-dashed border-border bg-card/40 p-3 text-center">
-      <span className="text-[10px] leading-tight text-[--color-muted]">
-        no image URL
-        <br />
-        (set MARKETING_ASSET_BASE)
-      </span>
     </div>
   );
 }

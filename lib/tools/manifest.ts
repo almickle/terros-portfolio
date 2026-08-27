@@ -15,6 +15,7 @@
  * portal exists to solve.
  */
 import { readFile } from "node:fs/promises";
+import { MANIFEST_PATH, blobToken, readBlob } from "@/lib/tools/blob";
 
 export type Platform = "instagram" | "reddit" | "stories" | "pinned";
 
@@ -36,8 +37,6 @@ export interface ManifestAsset {
   width: number;
   height: number;
   bytes: number;
-  url?: string;
-  thumbUrl?: string;
 }
 
 export interface ManifestSlide {
@@ -112,43 +111,61 @@ export type ManifestResult = { ok: true; manifest: Manifest } | { ok: false; err
 /**
  * Load the manifest.
  *
- * `MARKETING_MANIFEST_URL` takes an http(s) URL — normally the published blob —
- * or a local filesystem path. The local form is not a leftover: it lets the
- * whole portal be run against `marketing/out/manifest.json` before any storage
- * exists, which is how this gets verified without provisioning anything.
+ * Two sources, and the ordinary one is the store: a private blob read with
+ * `BLOB_READ_WRITE_TOKEN`, at a pathname both sides hold as a constant. There is
+ * no URL to configure, because a private blob has none.
  *
- * Revalidated rather than cached forever, so a re-publish shows up on its own.
+ * `MARKETING_MANIFEST_URL` overrides it with an http URL or a local file, which
+ * is a development affordance rather than a fallback — it runs the whole portal
+ * against `marketing/out/manifest.json` with no store at all.
  */
 export async function loadManifest(): Promise<ManifestResult> {
   const source = process.env.MARKETING_MANIFEST_URL;
-  if (!source) return { ok: false, error: { kind: "unconfigured" } };
 
   try {
-    if (/^https?:\/\//.test(source)) {
-      const res = await fetch(source, { next: { revalidate: 60 } });
-      if (!res.ok) return { ok: false, error: { kind: "unreachable", detail: `${res.status} ${res.statusText}` } };
-      return { ok: true, manifest: (await res.json()) as Manifest };
+    // Local override first, and it is a development affordance, not a fallback:
+    // it lets the whole portal run against marketing/out/manifest.json with no
+    // store at all. Production sets no such variable and takes the branch below.
+    if (source) {
+      if (/^https?:\/\//.test(source)) {
+        const res = await fetch(source, { next: { revalidate: 60 } });
+        if (!res.ok) return { ok: false, error: { kind: "unreachable", detail: `${res.status} ${res.statusText}` } };
+        return { ok: true, manifest: (await res.json()) as Manifest };
+      }
+      return { ok: true, manifest: JSON.parse(await readFile(source, "utf8")) as Manifest };
     }
-    return { ok: true, manifest: JSON.parse(await readFile(source, "utf8")) as Manifest };
+
+    if (!blobToken()) return { ok: false, error: { kind: "unconfigured" } };
+
+    const result = await readBlob(MANIFEST_PATH);
+    if (!result || result.statusCode !== 200) {
+      return {
+        ok: false,
+        error: { kind: "unreachable", detail: `${MANIFEST_PATH} is not in the store — has publish.ts run?` },
+      };
+    }
+    return { ok: true, manifest: (await new Response(result.stream).json()) as Manifest };
   } catch (e) {
     return { ok: false, error: { kind: "unreachable", detail: e instanceof Error ? e.message : String(e) } };
   }
 }
 
 /**
- * Where an asset's image actually lives.
+ * Where an asset's image comes from.
  *
- * A published manifest carries absolute URLs. A LOCAL one carries none by
- * design — a path is a durable fact about the render and a URL is a property of
- * wherever it was last sent — so `MARKETING_ASSET_BASE` supplies the origin for
- * a local run, pointed at a static server over `marketing/out/web`.
+ * A ROUTE ON THIS SITE, not a blob URL. The store is private, so a browser
+ * cannot read it directly — `/api/tools/asset` checks the same tools cookie the
+ * rest of the portal is behind and streams the object through. One gate covering
+ * both the pages and the pictures, rather than a password on the pages and open
+ * URLs underneath them.
+ *
+ * `MARKETING_ASSET_BASE` skips the proxy entirely for local development, where
+ * the images are served off disk by any static server and there is no store.
  */
-export function assetSrc(asset: ManifestAsset, size: "full" | "thumb"): string | null {
-  const published = size === "thumb" ? asset.thumbUrl : asset.url;
-  if (published) return published;
+export function assetSrc(asset: ManifestAsset, size: "full" | "thumb"): string {
   const base = process.env.MARKETING_ASSET_BASE;
-  if (!base) return null;
-  return `${base.replace(/\/$/, "")}/${size}/${asset.path.replace(/\.png$/, ".webp")}`;
+  if (base) return `${base.replace(/\/$/, "")}/${size}/${asset.path.replace(/\.png$/, ".webp")}`;
+  return `/api/tools/asset?size=${size}&path=${encodeURIComponent(asset.path)}`;
 }
 
 /** Postable frames only — what a mockup should ever show. */
