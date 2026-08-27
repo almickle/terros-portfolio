@@ -15,7 +15,7 @@
  * portal exists to solve.
  */
 import { readFile } from "node:fs/promises";
-import { MANIFEST_PATH, blobToken, readBlob } from "@/lib/tools/blob";
+import { MANIFEST_PATH, blobToken, readBlob, tokenProblem } from "@/lib/tools/blob";
 
 export type Platform = "instagram" | "reddit" | "stories" | "pinned";
 
@@ -135,7 +135,14 @@ export async function loadManifest(): Promise<ManifestResult> {
       return { ok: true, manifest: JSON.parse(await readFile(source, "utf8")) as Manifest };
     }
 
-    if (!blobToken()) return { ok: false, error: { kind: "unconfigured" } };
+    const token = blobToken();
+    if (!token) return { ok: false, error: { kind: "unconfigured" } };
+
+    // Checked before the read, so a malformed token is reported as the
+    // configuration mistake it is rather than surfacing as undici's
+    // "invalid header value", which names neither the variable nor the cause.
+    const problem = tokenProblem(token);
+    if (problem) return { ok: false, error: { kind: "unreachable", detail: problem } };
 
     const result = await readBlob(MANIFEST_PATH);
     if (!result || result.statusCode !== 200) {
