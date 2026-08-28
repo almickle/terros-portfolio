@@ -39,8 +39,8 @@ export const PORTALS: Portal[] = [
     href: "/tools/growth",
     name: "Growth",
     description:
-      "Campaigns in aggregate, alongside the funnel they feed — daily actives, activation, conversion.",
-    status: "planned",
+      "Where learners come from and what they do once here — the three campaigns, self-reported channels against Apple's own attribution, daily actives, and the onboarding funnel.",
+    status: "live",
   },
   {
     slug: "design",
