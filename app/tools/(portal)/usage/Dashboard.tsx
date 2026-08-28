@@ -5,6 +5,7 @@ import {
   hitRate,
   perCall,
   perKPrompt,
+  type TaskRow,
   type UsageBucket,
   type UsageSnapshot,
 } from "@/lib/tools/usage";
@@ -80,6 +81,28 @@ function Panel({ title, note, right, children }: {
       {note ? <p className="text-xs text-[--color-muted] mb-3 max-w-3xl leading-relaxed">{note}</p> : null}
       <div className="overflow-x-auto">{children}</div>
     </section>
+  );
+}
+
+/**
+ * The model(s) that served a task.
+ *
+ * The vendor prefix is dropped — every row would otherwise start `openai/` and
+ * the part that differs sits where the eye is not. Kept in the tooltip, along
+ * with the call split, which is what makes a two-model row readable: a task
+ * mid-move shows both, and the counts say how far through it is.
+ */
+function Models({ models }: { models: TaskRow["models"] }) {
+  if (!models || models.length === 0) return <span className="text-[--color-muted]">—</span>;
+  const short = (m: string) => m.split("/").pop() ?? m;
+  const title = models.map((m) => `${m.model} · ${m.calls.toLocaleString()} calls · $${m.usd.toFixed(4)}`).join("\n");
+  return (
+    <span title={title} className="whitespace-nowrap">
+      {short(models[0]!.model)}
+      {models.length > 1 ? (
+        <span className="text-[--color-muted]"> +{models.length - 1}</span>
+      ) : null}
+    </span>
   );
 }
 
@@ -268,7 +291,7 @@ export function Dashboard({ snapshot: s }: { snapshot: UsageSnapshot }) {
         <table className="text-sm min-w-full">
           <thead>
             <tr className="border-b border-border">
-              <th className={th}>Task</th><th className={th}>Calls</th><th className={th}>Input</th>
+              <th className={th}>Task</th><th className={th}>Model</th><th className={th}>Calls</th><th className={th}>Input</th>
               <th className={th}>Output</th><th className={th}>Hit</th><th className={th}>Cost</th>
               <th className={th}>$/call</th><th className={th}>p95</th><th className={th}>Fails</th><th className={th} />
             </tr>
@@ -277,6 +300,7 @@ export function Dashboard({ snapshot: s }: { snapshot: UsageSnapshot }) {
             {w.byTask.map((x) => (
               <tr key={x.route} className="border-b border-border/50">
                 <td className={`${td} font-medium`}>{x.route}</td>
+                <td className={td}><Models models={x.models} /></td>
                 <td className={td}>{int(x.calls)}</td>
                 <td className={td}>{int(x.prompt)}</td>
                 <td className={td}>{int(x.completion)}</td>

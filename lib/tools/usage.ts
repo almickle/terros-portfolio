@@ -52,7 +52,17 @@ export interface WindowComparison {
   spendRatio: number | null;
 }
 
-export type TaskRow = { route: string; avgMs: number | null; p95Ms: number | null } & UsageBucket;
+/**
+ * `models` is a LIST because a route legitimately has more than one — a
+ * fallback hop, or a tier change part-way through the window. Sorted by cost,
+ * so the first is the one that mattered and the rest are worth a tooltip.
+ */
+export type TaskRow = {
+  route: string;
+  avgMs: number | null;
+  p95Ms: number | null;
+  models: Array<{ model: string; calls: number; usd: number }>;
+} & UsageBucket;
 
 /**
  * `active` is membership in the backend's task registry — a model the router
