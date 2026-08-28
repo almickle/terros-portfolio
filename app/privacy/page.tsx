@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: "Privacy Policy for Terros Digital apps.",
 };
 
-const EFFECTIVE_DATE = "August 11, 2026";
+const EFFECTIVE_DATE = "August 27, 2026";
 
 export default function PrivacyPage() {
   return (
@@ -30,9 +30,15 @@ export default function PrivacyPage() {
           </p>
           <p>
             The short version: everything we collect is tied to your account and used to run the
-            app. We do not sell your data, we do not use it for advertising, we do not track you
-            across other companies&apos; apps or websites, and there is no advertising or analytics
-            SDK in Menzi.
+            app. We do not sell your data, we do not show you ads, and we do not track you across
+            other companies&apos; apps or websites.
+          </p>
+          <p>
+            We do measure our own advertising. When we pay to advertise Menzi, Apple tells us which
+            ad campaign led to an install so we can tell whether that spend was worth it. That is
+            the opposite direction from targeting: it tells us about our ad, not about you, and it
+            uses Apple&apos;s own privacy-preserving frameworks rather than an advertising SDK.
+            Section 5 explains it in full.
           </p>
         </section>
 
@@ -66,9 +72,11 @@ export default function PrivacyPage() {
             </li>
             <li>
               <strong className="text-[--color-text]">Identifiers</strong> — your account ID, and a
-              device identifier we generate ourselves to remember that a device has completed
-              placement and to deliver push notifications. This is not Apple&apos;s advertising
-              identifier; Menzi never requests it.
+              device identifier we generate ourselves. We use it to remember that a device has
+              completed placement, to deliver push notifications, and to count how far people get
+              through the introduction — that last one has to be keyed to the device rather than the
+              account, because the introduction starts before an account exists. This is not
+              Apple&apos;s advertising identifier; Menzi never requests it.
             </li>
             <li>
               <strong className="text-[--color-text]">Purchases</strong> — your subscription status
@@ -77,6 +85,13 @@ export default function PrivacyPage() {
             <li>
               <strong className="text-[--color-text]">Usage data</strong> — which screens you open,
               which days you are active, and whether you started or completed a purchase.
+            </li>
+            <li>
+              <strong className="text-[--color-text]">Advertising data</strong> — if you installed
+              Menzi after tapping one of our App Store ads, the campaign, ad group and search term
+              that ad belonged to, the country the install came from, and whether it was a first
+              install or a reinstall. This describes the ad, not you: it contains no identifier from
+              Apple or anyone else, and it is the only advertising data we hold.
             </li>
             <li>
               <strong className="text-[--color-text]">Diagnostics</strong> — crash reports,
@@ -97,10 +112,16 @@ export default function PrivacyPage() {
             <li>To generate practice content from the vocabulary you already know</li>
             <li>To manage your subscription and enforce usage limits</li>
             <li>To diagnose crashes and faults, and to measure whether features work</li>
+            <li>
+              To see where people get stuck in the introduction, so we can fix it — which step
+              they reached, and which one they stopped at
+            </li>
             <li>To respond to support requests</li>
+            <li>To measure whether the ads we pay for actually bring people to Menzi</li>
           </ul>
           <p className="mt-3">
-            We do not use your data for advertising, and we do not share it with data brokers.
+            We never use your data to target ads at you, inside Menzi or anywhere else, and we do
+            not share it with data brokers. Menzi contains no advertising SDK.
           </p>
         </section>
 
@@ -143,7 +164,48 @@ export default function PrivacyPage() {
         <Separator />
 
         <section>
-          <h2 className="text-base font-semibold text-[--color-text] mb-3">5. Third-Party Services</h2>
+          <h2 className="text-base font-semibold text-[--color-text] mb-3">5. Advertising Measurement</h2>
+          <p className="mb-3">
+            We advertise Menzi, including on the App Store. Measuring whether that advertising works
+            requires knowing which ads led to installs, and both mechanisms below are Apple&apos;s
+            own, built so that this can be answered without identifying you. Menzi contains no
+            third-party advertising or attribution SDK, requests no advertising identifier, and
+            never shows you an ad.
+          </p>
+          <ul className="list-disc pl-5 space-y-2">
+            <li>
+              <strong className="text-[--color-text]">Apple Ads attribution.</strong> If you install
+              Menzi after tapping one of our App Store ads, iOS gives the app a short-lived token
+              which our server exchanges with Apple for the campaign, ad group and search term the
+              ad belonged to, along with the country the install came from and whether it was a
+              first install or a reinstall. That result is stored against your account so we can
+              tell which campaigns bring people who go on to use Menzi. Apple&apos;s response
+              contains no identifier for you or your device, and this uses the standard payload,
+              which carries no timestamp.
+            </li>
+            <li>
+              <strong className="text-[--color-text]">SKAdNetwork.</strong> This covers ads we may
+              run somewhere other than the App Store. Menzi hands iOS a single number between 0 and
+              63 as you use the app; we have defined it to mean how far someone got, such as whether
+              they created an account or subscribed. If you arrived from an ad, iOS — not Menzi —
+              later sends that ad network a receipt saying an install happened, with that number
+              attached, and sends us a copy. iOS delays it, and withholds the number entirely when
+              too few people are in the same group for it to stay anonymous. The receipt contains
+              nothing that identifies you, and neither we nor the ad network can connect it back to
+              your account.
+            </li>
+          </ul>
+          <p className="mt-3">
+            Neither mechanism requires the App Tracking Transparency prompt, and Menzi does not show
+            one, because neither combines what you do in Menzi with data about you from other
+            companies. That combination is what &quot;tracking&quot; means, and we do not do it.
+          </p>
+        </section>
+
+        <Separator />
+
+        <section>
+          <h2 className="text-base font-semibold text-[--color-text] mb-3">6. Third-Party Services</h2>
           <p className="mb-3">
             We share data with the following processors, only as needed to run Menzi. Each is bound
             by its own agreement to protect your data to a standard equal to this policy, and none
@@ -154,26 +216,29 @@ export default function PrivacyPage() {
             <li><strong className="text-[--color-text]">ElevenLabs</strong> — speech synthesis and transcription</li>
             <li><strong className="text-[--color-text]">Microsoft Azure</strong> — pronunciation and tone scoring</li>
             <li><strong className="text-[--color-text]">RevenueCat</strong> — subscription status, over Apple In-App Purchase</li>
-            <li><strong className="text-[--color-text]">Apple</strong> — payment processing and push notification delivery</li>
+            <li><strong className="text-[--color-text]">Apple</strong> — payment processing, push notification delivery, and App Store ad attribution (Section 5)</li>
             <li><strong className="text-[--color-text]">Sentry</strong> — crash and performance diagnostics</li>
             <li><strong className="text-[--color-text]">Resend</strong> — password-reset email</li>
             <li><strong className="text-[--color-text]">Neon</strong> — database hosting</li>
             <li><strong className="text-[--color-text]">Railway</strong> — application hosting</li>
           </ul>
           <p className="mt-3">
-            We do not sell your personal data, and we do not share it for advertising or advertising
-            measurement.
+            We do not sell your personal data. The only advertising-measurement data that leaves
+            Menzi is the anonymous SKAdNetwork receipt described in Section 5, which iOS sends on our
+            behalf and which identifies no one.
           </p>
         </section>
 
         <Separator />
 
         <section>
-          <h2 className="text-base font-semibold text-[--color-text] mb-3">6. Data Retention</h2>
+          <h2 className="text-base font-semibold text-[--color-text] mb-3">7. Data Retention</h2>
           <p className="mb-3">
             We keep your account and learning data for as long as your account exists. Diagnostic
             breadcrumbs are kept on a short rolling window and then discarded. Audio recordings are
-            not retained at all.
+            not retained at all. The records of how far a device got through the introduction are
+            discarded after six months, and deleting your account removes them too — including the
+            ones from before the account existed.
           </p>
           <p className="mb-3">
             Audio you import to study as a story is stored only on your device. It is sent once for
@@ -189,7 +254,7 @@ export default function PrivacyPage() {
         <Separator />
 
         <section>
-          <h2 className="text-base font-semibold text-[--color-text] mb-3">7. Your Choices and Rights</h2>
+          <h2 className="text-base font-semibold text-[--color-text] mb-3">8. Your Choices and Rights</h2>
           <p className="mb-3">
             <strong className="text-[--color-text]">Deleting your account.</strong> You can delete
             your account and everything associated with it from inside the app: Settings, then
@@ -216,9 +281,9 @@ export default function PrivacyPage() {
         <Separator />
 
         <section>
-          <h2 className="text-base font-semibold text-[--color-text] mb-3">8. International Transfers</h2>
+          <h2 className="text-base font-semibold text-[--color-text] mb-3">9. International Transfers</h2>
           <p>
-            Terros Digital LLC is based in the United States, and the services listed in Section 5
+            Terros Digital LLC is based in the United States, and the services listed in Section 6
             process data in the United States and other countries. If you use Menzi from outside the
             US, your data will be transferred to and processed there.
           </p>
@@ -227,7 +292,7 @@ export default function PrivacyPage() {
         <Separator />
 
         <section>
-          <h2 className="text-base font-semibold text-[--color-text] mb-3">9. Children&apos;s Privacy</h2>
+          <h2 className="text-base font-semibold text-[--color-text] mb-3">10. Children&apos;s Privacy</h2>
           <p>
             Menzi is not directed at children under 13. We do not knowingly collect personal data
             from children under 13. If you believe a child has provided us with personal data,
@@ -238,7 +303,7 @@ export default function PrivacyPage() {
         <Separator />
 
         <section>
-          <h2 className="text-base font-semibold text-[--color-text] mb-3">10. Security</h2>
+          <h2 className="text-base font-semibold text-[--color-text] mb-3">11. Security</h2>
           <p>
             We use industry-standard security practices including encryption in transit (TLS) and at
             rest. Passwords are stored hashed and are never readable by us. No method of transmission
@@ -250,7 +315,7 @@ export default function PrivacyPage() {
         <Separator />
 
         <section>
-          <h2 className="text-base font-semibold text-[--color-text] mb-3">11. Contact</h2>
+          <h2 className="text-base font-semibold text-[--color-text] mb-3">12. Contact</h2>
           <p className="mb-2">Questions about this policy or requests regarding your data:</p>
           <a
             href="mailto:privacy@terrosdigital.com"
@@ -263,7 +328,7 @@ export default function PrivacyPage() {
         <Separator />
 
         <section>
-          <h2 className="text-base font-semibold text-[--color-text] mb-3">12. Changes</h2>
+          <h2 className="text-base font-semibold text-[--color-text] mb-3">13. Changes</h2>
           <p>
             We may update this policy from time to time. Material changes will be communicated via
             an in-app notice or email. Continued use of the app after a policy update constitutes
