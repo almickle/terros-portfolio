@@ -8,14 +8,18 @@
  * dashboard to read — the cost is that the page is as fresh as the last publish,
  * which is why `generatedAt` is rendered rather than hidden.
  *
+ * TYPES AND ARITHMETIC ONLY — no reader lives here, and that is not tidiness.
+ * The dashboard is a client component and imports this module for `hitRate` and
+ * the row types; anything server-only in the same file (the blob SDK, a
+ * `node:fs` read) is pulled into the browser bundle with them and the build
+ * fails on an unhandled scheme. `usage.server.ts` holds the read.
+ *
  * THE SHAPE IS OWNED BY THE BACKEND (`src/lib/usageSnapshot.ts`), and these
  * types are a copy across a repo boundary. They are therefore read as a
  * CONTRACT, not as a guarantee: a field the publisher stops sending arrives as
  * undefined, so everything below is rendered defensively and a missing section
  * reads as "not published" rather than crashing the page.
  */
-import { blobToken, readBlob, tokenProblem } from "@/lib/tools/blob";
-
 /** Where the publisher writes it. A constant on both sides. */
 export const USAGE_PATH = "usage/snapshot.json";
 
@@ -48,14 +52,29 @@ export interface WindowComparison {
   spendRatio: number | null;
 }
 
+export type TaskRow = { route: string; avgMs: number | null; p95Ms: number | null } & UsageBucket;
+
+/**
+ * `active` is membership in the backend's task registry — a model the router
+ * could pick TODAY — not "used recently". A model we moved off keeps its history
+ * and stops being active, which is the whole distinction the filter offers.
+ */
+export type ModelRow = { model: string; servingModel: string | null; active: boolean } & UsageBucket;
+
+export interface UsageWindow {
+  days: number;
+  totals: UsageBucket;
+  byTask: TaskRow[];
+  byModel: ModelRow[];
+}
+
 export interface UsageSnapshot {
   generatedAt: string;
   database: "production" | "dev branch";
   windowDays: number;
-  totals: UsageBucket;
+  /** Offered windows, narrowest first — the time filter is this list. */
+  windows: UsageWindow[];
   daily: Array<{ day: string } & UsageBucket>;
-  byTask: Array<{ route: string; avgMs: number | null; p95Ms: number | null } & UsageBucket>;
-  byModel: Array<{ model: string; servingModel: string | null } & UsageBucket>;
   cache: {
     cutover: string;
     windowDays: number;
@@ -69,10 +88,6 @@ export interface UsageSnapshot {
   };
 }
 
-export type UsageResult =
-  | { ok: true; snapshot: UsageSnapshot }
-  | { ok: false; error: { kind: "unconfigured" | "unreachable"; detail?: string } };
-
 /** Share of input tokens served from cache — null when nothing reported it. */
 export function hitRate(b: UsageBucket): number | null {
   if (!b || b.cacheReported === 0 || b.prompt <= 0) return null;
@@ -81,38 +96,3 @@ export function hitRate(b: UsageBucket): number | null {
 
 export const perCall = (b: UsageBucket): number | null => (b.calls > 0 ? b.usd / b.calls : null);
 export const perKPrompt = (b: UsageBucket): number | null => (b.prompt > 0 ? (b.usd / b.prompt) * 1000 : null);
-
-/**
- * Load the snapshot. Mirrors `loadManifest` — including the local override,
- * which runs the whole page against a `--dry` build with no store at all.
- */
-export async function loadUsage(): Promise<UsageResult> {
-  const source = process.env.USAGE_SNAPSHOT_URL;
-  try {
-    if (source) {
-      if (/^https?:\/\//.test(source)) {
-        const res = await fetch(source, { next: { revalidate: 60 } });
-        if (!res.ok) return { ok: false, error: { kind: "unreachable", detail: `${res.status} ${res.statusText}` } };
-        return { ok: true, snapshot: (await res.json()) as UsageSnapshot };
-      }
-      const { readFile } = await import("node:fs/promises");
-      return { ok: true, snapshot: JSON.parse(await readFile(source, "utf8")) as UsageSnapshot };
-    }
-
-    const token = blobToken();
-    if (!token) return { ok: false, error: { kind: "unconfigured" } };
-    const problem = tokenProblem(token);
-    if (problem) return { ok: false, error: { kind: "unreachable", detail: problem } };
-
-    const result = await readBlob(USAGE_PATH);
-    if (!result || result.statusCode !== 200) {
-      return {
-        ok: false,
-        error: { kind: "unreachable", detail: `${USAGE_PATH} is not in the store — has usage-publish.ts run?` },
-      };
-    }
-    return { ok: true, snapshot: (await new Response(result.stream).json()) as UsageSnapshot };
-  } catch (e) {
-    return { ok: false, error: { kind: "unreachable", detail: e instanceof Error ? e.message : String(e) } };
-  }
-}
