@@ -27,6 +27,14 @@ export const PORTALS: Portal[] = [
     status: "live",
   },
   {
+    slug: "usage",
+    href: "/tools/usage",
+    name: "Usage",
+    description:
+      "What production actually costs — every LLM call by task and model, input and output tokens, cache hit rates, and the voice ledger beside them.",
+    status: "live",
+  },
+  {
     slug: "growth",
     href: "/tools/growth",
     name: "Growth",
